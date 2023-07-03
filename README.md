@@ -254,7 +254,7 @@ ctest
 ```
 
 ## License
-json_print is MIT licensed. See LICENSE.txt for details
+json_print is MIT licensed. See LICENSE for details
 
 ## Contributing
 Thanks! See CONTRIBUTING.md for details.
