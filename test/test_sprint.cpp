@@ -17,6 +17,30 @@ TEST_CASE("should print an integer") {
     CHECK(std::string(buffer) == "42");
 }
 
+TEST_CASE("should print a floating point number") {
+    char buffer[128] = { 0 };
+    const char format[] = "?";
+    JsonPrint::json_print_context context = JsonPrint::compile(format, format + sizeof(format));
+    json_sprint(buffer, sizeof(buffer), context, 1.4);
+    CHECK(std::string(buffer) == "1.4");
+}
+
+TEST_CASE("should print null for infinite") {
+    char buffer[128] = { 0 };
+    const char format[] = "?";
+    JsonPrint::json_print_context context = JsonPrint::compile(format, format + sizeof(format));
+    json_sprint(buffer, sizeof(buffer), context, std::numeric_limits<double>::infinity());
+    CHECK(std::string(buffer) == "null");
+}
+
+TEST_CASE("should print null for NaN") {
+    char buffer[128] = { 0 };
+    const char format[] = "?";
+    JsonPrint::json_print_context context = JsonPrint::compile(format, format + sizeof(format));
+    json_sprint(buffer, sizeof(buffer), context, std::numeric_limits<double>::quiet_NaN());
+    CHECK(std::string(buffer) == "null");
+}
+
 TEST_CASE("should print a const char*") {
     char buffer[128] = { 0 };
     const char format[] = "?";

@@ -138,14 +138,27 @@ inline void json_print_arg(Dest dest, unsigned long long n) {
     write_printf(dest, "%llu", n);
 }
 
+template <typename Dest, typename T>
+inline void json_print_float_arg(Dest dest, T n) {
+    if (std::isnan(n) || std::isinf(n))
+        json_print_arg(dest, nullptr);
+    else
+        write_printf(dest, "%g", n);
+}
+
 template <typename Dest>
 inline void json_print_arg(Dest dest, float n) {
-    write_printf(dest, "%g", n);
+    json_print_float_arg(dest, n); 
 }
 
 template <typename Dest>
 inline void json_print_arg(Dest dest, double n) {
-    write_printf(dest, "%g", n);
+    json_print_float_arg(dest, n); 
+}
+
+template <typename Dest>
+inline void json_print_arg(Dest dest, long double n) {
+    json_print_float_arg(dest, n); 
 }
 
 /* array types */
